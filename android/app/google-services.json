@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "903414981225",
+    "project_id": "pcklinik-sms",
+    "storage_bucket": "pcklinik-sms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903414981225:android:693a0763bc8fe23f80f8f8",
+        "android_client_info": {
+          "package_name": "com.vernu.sms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWfluoRBfA_PQ1rjhqrvhs0G141sFOo9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
