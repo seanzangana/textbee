@@ -1,0 +1,39 @@
+name: Build TextBee APK (PCKlinik)
+# Builds the workshop-phone APK pointed at sms.pcklinik.dk.
+# Runs automatically on push, or manually via the Actions tab (Run workflow).
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Create debug keystore (release is debug-signed per build.gradle)
+        run: |
+          mkdir -p ~/.android
+          keytool -genkeypair -v -keystore ~/.android/debug.keystore \
+            -storepass android -keypass android -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US" || true
+      - name: Build prod release APK
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:assembleProdRelease --no-daemon --stacktrace
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: textbee-pcklinik-apk
+          path: android/app/build/outputs/apk/prod/release/*.apk
+          if-no-files-found: error
